@@ -1,0 +1,17 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 100" width="101" height="100">
+	<defs>
+		<image  width="44" height="45" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAtCAYAAADV2ImkAAAAAXNSR0IB2cksfwAABR5JREFUeJzFmWtoW2UYx5OuW52t1Q/OLzoVJ3M6/OCmIoiKYkFExBs4rA6ZMBz7sOE2GUxBwQ9OmqRpUpstbROTpnbnPZfkpI4xaJqmSZrmngw/OCq62THXKUrttrba6P+tzewlidnpuTzwEEJOTn7ve57L/3mj00k01h+o5/sHXmH8g5Z2NvkuvFHqvRQzQN1l4+JvOISohxGDMwD+m+sPFHp9oZ/c3nCz1nxLzMhk77HzsS/cvuEs4w9OUtiin/AHrzq9EbPWjPNmYvP6bm/0CbcvnCT+wbnFoP/u8EDha3HoIha0WWtWnZVN6TqF2HbSH+hEzM4uh6XOYhE9vuEDbWy6TmtenYHJNXYLUQFxOlMKljp29ywW9YKB5PQaguZrLWzquR5xOEaTqhwsPqO7e8rMpu/WDJbaMT6++StvxMP2B6bLwS4Az3byMZeZy+vh2sCibNW5vOE9fWLwl0qwRe8WRna1kux6TWDNJKNvI+ndHl/oMmDKhsL1coZajMXt1QR2AfgxwCYrxe0y4IkOLnFQM2B0sGZk/W/VwFJHA7mGcHjSRLI1qoKiKuiwU7c7vFEzzfxqgfv8QzMecbiJNhdVgbFDOpSmbb1i6Gw1sbuoJU+7fOFPVIWlZiR5nV2IHYLyulwtLHW06it2ftSlBXAdGsDnaL9Vh0PRbXy8q51TWVpaudSdUFvf3CjsfByLQx+Y2cwdqgJTw+7+LBE4hjb+qqqwXcLIx6ipk1KA0b6nUGHsqsEamdxN6Fb7kXB/SgGmju9fgPZ4XBVg6NhGiJ1PUX8lwRbLG5L2IxPJrVEF+ksu0YIS9btUYITFHDpkAot/WhXgY/zoPjSNcanA1Dl/oHCcH2Vwrw2KA3vE0IurieH/KkbwVyTvTiThOkWB8UgbuFXCXo9nMfitjUscwci0VlFo/NiAHMALY9MEWvZLXUJMOWj82GE5gIveiyEA6u8zJPTDCJFaDLS1cgM/KicwdSqmMBCMoGy2WNnUdilcRjZXEXpVlaJ0iAzMoWRexew3iAqyy8Jl6hEu9WaS3mBgsvO7Xu6IALDroXNucXgjDxlJ9rZSwE65gRfFNj3DuIikTKIrjjm9UStej2Lqfhua+j48ideP8/F3MKZtwfVb4fvgJ6mERU5kAL5jBTAEUDMuKHnCI+OO0wGhgN8qYMSaJgsaHK/XIKTOY2ErnjI++6uDTxxBY7p5CTBWjDEp8oOSwFIcTe08BozXEBYrj8M6uLgB2kCS1FTC0SMKCAm3iWQ2lkw8aNtncAEvZfpQwhE2F1pJpqlspTAy2Qbo45eRBJLFkHywg7NOIbrfxJQIheWGWH4TCXKOliUtYJFoU9g0Bzbv3v+FpdbK5Ws6hRhVcWeqPQmSy6mu6fGFTtm4+FMtzA0c46KlNvSKQ02APqcOaICKpyk0mRNGIrGVW9nkGvgeJOIYbrhqCVrBC6jDY25f+Ch09SZJsEUzkPw6dKTnAd2HkveH3CFCmwiS6zs80UNmNr0J9VaeUQta4AEkwWG02CD8kgygV3CfjEOI2iwYrxCv8p4zo+TVWEhKb+djtfCdTiGSQzZPskv/A6m4+/Tp0FaLvKCxehIq7q02kn6wlWSVnVKoIda2oNHsQKiYAWB0eSOnsWPj8O/x/hL9mww+AW38I64ZR4zOohGchn+IZH5EccDl1gJZCEGim/+Pg2Ruhe7diPf3t7PJ9yAh6Wz3Pt7vpa/IgWexkHrVIas1I8mvNZGs7ID/AJzpGrr9O4iSAAAAAElFTkSuQmCC"/>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="m93.56 16.86l-1.13 66.99-100.99-1.71 1.13-66.99z"/>
+		</clipPath>
+	</defs>
+	<style>
+		.s0 { fill: #ffffff } 
+	</style>
+	<use id="Layer 1" href="#img1" x="49" y="17"/>
+	<g id="Layer copy 2">
+		<path fill-rule="evenodd" class="s0" d="m22.39 57.6c-6.77 0-12.27 5.52-12.27 12.32 0 6.79 5.5 12.32 12.27 12.32h53.38c8.5 0 15.41-6.94 15.41-15.47 0-8.53-6.91-15.46-15.41-15.46q-2.38 0-4.67 0.72l-0.99 0.32-0.34-0.99c-3.27-9.2-11.99-15.38-21.7-15.38-11.87 0-21.73 8.93-22.92 20.77l-0.11 1.09-1.09-0.13c-0.61-0.08-1.1-0.11-1.56-0.11z"/>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp1)">
+	</g>
+</svg>

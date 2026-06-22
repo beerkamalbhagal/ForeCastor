@@ -1,0 +1,607 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    font-weight: 600;
+}
+
+body {
+    background: url('assets/bg.jpg');
+    width: 100%;
+    height: 100dvh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* keep viewport clean */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100dvh;
+    background: rgb(0, 0, 0, 0.15);
+    backdrop-filter: blur(15px);
+}
+
+/* UTILITIES */
+.regular-txt {
+    font-weight: 400;
+}
+
+/* END UTILITIES */
+
+.main-container {
+    /* Scale to max possible size in viewport while keeping edge margins */
+    --card-margin-x: clamp(12px, 4vw, 24px);
+    --card-margin-y: clamp(12px, 4vh, 24px);
+
+    width: min(92vw, calc(100vw - (var(--card-margin-x) * 2)));
+    height: min(92vh, calc(100vh - (var(--card-margin-y) * 2)));
+
+    max-width: 520px;
+    max-height: 720px;
+
+    z-index: 1;
+    background: linear-gradient(to top,
+            rgb(0, 0, 0, 0.15),
+            rgb(255, 255, 255, 0.15));
+    border-radius: 12px;
+    backdrop-filter: blur(100px);
+
+    padding: clamp(14px, 2.6vw, 20px);
+    font-size: clamp(12px, 2.3vw, 16px);
+
+    /* The autocomplete dropdown is allowed to overflow the card. */
+    overflow: visible;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    /* Shared base for every background that lands on the card (message
+       jpgs via :has() below, weather jpgs via JS inline style). Lifting
+       these here means the message rules only have to swap background-image. */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.main-container>* {
+    min-width: 0;
+}
+
+
+/* TOPBAR / HOME BUTTON */
+.topbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75em;
+}
+
+.home-btn {
+    background: rgb(0, 0, 0, 0.15);
+    border: 3px solid transparent;
+    border-radius: 99px;
+    padding: 0.4em 0.7em;
+    cursor: pointer;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    transition: background 0.25s, border-color 0.25s, transform 0.12s;
+    font-weight: 600;
+}
+
+.home-btn:hover {
+    background: rgb(0, 0, 0, 0.28);
+    border-color: rgb(0, 0, 0, 0.18);
+}
+
+.home-btn:active {
+    transform: scale(0.94);
+}
+
+.home-btn:focus-visible {
+    outline: none;
+    border-color: rgb(0, 0, 0, 0.35);
+}
+
+.home-btn .material-symbols-outlined {
+    font-size: 1.35em;
+    line-height: 1;
+}
+
+.home-emoji {
+    font-size: 0.95em;
+    line-height: 1;
+    /* keep emoji subtle so the bars stay the dominant cue */
+    opacity: 0.85;
+}
+
+/* INPUT CONTAINER */
+.input-container {
+    position: relative;
+    margin-bottom: 1.5625em;
+}
+
+.city-input {
+    width: 100%;
+    padding: 0.625em 1em;
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background: rgb(0, 0, 0, 0.15);
+    outline: none;
+    font-weight: 500;
+    transition: 0.25s border;
+    padding-right: 2.8125em;
+}
+
+.city-input:focus {
+    border: 3px solid rgb(0, 0, 0, 0.15);
+}
+
+.city-input::placeholder {
+    color: rgb(255, 255, 255, 0.75);
+}
+
+.search-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    display: flex;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.25s;
+}
+
+.search-btn:hover {
+    opacity: 1;
+}
+
+/* AUTOCOMPLETE SUGGESTIONS */
+.suggestions-list {
+    position: absolute;
+    top: calc(100% + 0.4em);
+    left: 0;
+    right: 0;
+    z-index: 10;
+
+    list-style: none;
+    padding: 0.35em;
+    margin: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+
+    border-radius: 0.85em;
+    box-shadow: 0 0.6em 1.6em rgba(0, 0, 0, 0.35);
+
+    max-height: 18em;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+
+    /* Subtle pop-in when the dropdown appears. */
+    opacity: 0;
+    transform: translateY(-0.25em);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.suggestions-list[hidden] {
+    display: none;
+}
+
+.suggestions-list:not([hidden]) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.55em 0.7em;
+
+    border-radius: 0.55em;
+    cursor: pointer;
+
+    transition: background 0.12s ease, transform 0.12s ease;
+    line-height: 1.15;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.suggestion-name {
+    font-weight: 500;
+    font-size: 0.95em;
+    flex-shrink: 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.suggestion-name mark {
+    background: transparent;
+    color: inherit;
+    font-weight: 700;
+}
+
+.suggestion-region {
+    margin-left: auto;
+    opacity: 0.75;
+    font-size: 0.82em;
+    font-weight: 400;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+/* Scrollbar styling to match the rest of the card. */
+.suggestions-list::-webkit-scrollbar {
+    width: 0.35em;
+}
+
+.suggestions-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 99px;
+}
+
+.suggestions-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 99px;
+}
+
+/* END INPUT CONTAINER */
+
+/* SECTION: WEATHER INFO */
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5625em;
+
+    flex: 1;
+    min-height: 0;
+    /* allow children to shrink without pushing card out */
+}
+
+
+.location-date-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 0.375em;
+    /* Lets inner text nodes actually truncate — without this the flex item's
+       default min-width: auto holds it open to content width, which would
+       let long state names overflow the card before the .country-name
+       ellipsis rule could kick in. */
+    min-width: 0;
+}
+
+.location-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+}
+
+.country-region {
+    display: flex;
+    align-items: center;
+    font-size: 0.7em;
+    font-weight: 500;
+    opacity: 0.78;
+    margin-top: 0.15em;
+    min-width: 0;
+}
+
+.country-name {
+    /* Long state names like "Norte de Santander" should ellipsize rather than
+       overflow the card width. */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.weather-summary-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.weather-summary-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25em;
+}
+
+.weather-summary-img {
+    width: 6em;
+    aspect-ratio: 1;
+    max-width: 100%;
+    height: auto;
+}
+
+.weather-summary-left .condition-txt {
+    font-size: 0.875em;
+    text-align: center;
+    margin-top: -0.25em;
+}
+
+.weather-summary-info {
+    text-align: end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5em;
+}
+
+.temp-range {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    font-weight: 500;
+    font-size: 0.85em;
+    opacity: 0.85;
+}
+
+.temp-range .temp-day-icon,
+.temp-range .temp-night-icon {
+    font-size: 1.05em;
+    vertical-align: middle;
+}
+
+.temp-range .temp-day-txt {
+    font-weight: 600;
+}
+
+.temp-range .temp-night-txt {
+    opacity: 0.7;
+    font-weight: 400;
+}
+
+.temp-range .temp-sep {
+    opacity: 0.4;
+    margin: 0 0.1em;
+}
+
+.weather-conditions-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.condition-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.condition-item span {
+    font-size: 1.875em;
+}
+
+.forecast-header {
+    display: flex;
+    align-items: center;
+    margin: -0.25em 0 0;
+    opacity: 0.85;
+}
+
+.forecast-header h4 {
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+.forecast-toggle-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.15em 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.4em;
+    font-family: inherit;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+
+.forecast-toggle-btn:hover {
+    opacity: 1;
+}
+
+.forecast-toggle-btn:focus-visible {
+    outline: 2px solid rgb(255, 255, 255, 0.6);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.chevron-icon {
+    font-size: 1.2em;
+    line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+/* When the toggle is collapsed, the chevron rotates up to indicate
+   the forecast can be expanded again. */
+.forecast-toggle-btn[aria-expanded="false"] .chevron-icon {
+    transform: rotate(-90deg);
+}
+
+/* Smooth fade for collapsing the forecast list. The JS toggles `display:none`
+   after the transition for layout, but keeps this class as the source of
+   truth for the visual collapsed state. */
+.forecast-items-container {
+    display: flex;
+    gap: 0.625em;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25em 0 0.5em;
+    margin: 0 -0.25em;
+    padding-inline: 0.25em;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+.forecast-items-container.is-collapsed {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.forecast-items-container::-webkit-scrollbar {
+    height: 0.4em;
+}
+
+.forecast-items-container::-webkit-scrollbar-track {
+    background: rgb(0, 0, 0, 0.1);
+    border-radius: 99px;
+}
+
+.forecast-items-container::-webkit-scrollbar-thumb {
+    background: rgb(0, 0, 0, 0.25);
+    border-radius: 99px;
+}
+
+.forecast-item {
+    flex: 0 0 auto;
+    min-width: 5.5em;
+    width: 5.5em;
+    background: rgb(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.75em 0.5em;
+    border-radius: 12px;
+    transition: 0.25s background, 0.25s transform;
+    scroll-snap-align: start;
+}
+
+.forecast-item:hover {
+    background: rgb(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+.forecast-item-date {
+    font-size: 0.78em;
+    font-weight: 500;
+    opacity: 0.95;
+    white-space: nowrap;
+}
+
+.forecast-item-date.bold {
+    font-weight: 700;
+}
+
+.forecast-item-img {
+    width: 2.2em;
+    height: 2.2em;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.forecast-item-desc {
+    font-size: 0.7em;
+    font-weight: 400;
+    opacity: 0.8;
+    text-align: center;
+    line-height: 1.15;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.forecast-item-temps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05em;
+    line-height: 1.1;
+}
+
+.forecast-item-temp-high {
+    font-size: 0.95em;
+    font-weight: 600;
+}
+
+.forecast-item-temp-low {
+    font-size: 0.78em;
+    font-weight: 400;
+    opacity: 0.65;
+}
+
+/* END SECTION: WEATHER INFO */
+
+/* SECTION: MESSAGE */
+.section-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    margin-top: 95%;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+/* Message-screen backgrounds are scoped to .main-container so they fill
+   the same area as the weather jpgs (clear.jpg / snow.jpg / etc.).
+   :has() picks the active section by reading which one isn't hidden via
+   an inline `display: none` — so the bg applies on initial paint too,
+   with no flash before script.js runs. JS still overrides this with an
+   inline backgroundImage when the weather card takes over. cover / center
+   / no-repeat live on the .main-container base so these rules only have
+   to swap background-image. */
+.main-container:has(.search-city:not([style*="display: none"])) {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+        url('assets/message/searching.jpg');
+}
+
+.main-container:has(.not-found:not([style*="display: none"])) {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+        url('assets/message/404 error.jpg');
+}
+
+@media (max-width: 360px) {
+    .input-container {
+        margin-bottom: 1rem;
+    }
+}
+
+
+/* end SECTION: MESSAGE */
