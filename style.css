@@ -1116,3 +1116,74 @@ body::before {
 .city-card.is-recent .city-card-star {
     top: 2.45em;
 }
+
+
+/* ---------------------------------------------------------------
+   APP FOOTER (© Year ForeCastor — Predicting dam good weather)
+   --------------------------------------------------------------- */
+
+/* Lift .not-found up so it doesn't crash into the new footer band.
+   The original `.section-message { margin-top: 95% }` rule pushed
+   message bodies visually near the bottom of the card so they sat
+   roughly mid-screen on tall cards. That spot is now occupied by
+   `.footer`, so drop the offset to ~50% so "Not Found" reads as
+   "centered above the footer" instead of overlapping it.
+
+   `:not(.home-dashboard)` keeps the home dashboard's own override
+   (`margin-top: 0`) intact — only `.not-found` (which lacks the
+   `.home-dashboard` class) gets the new value. The `:not()` raises
+   specificity so the rule wins over the bare `.section-message`
+   selector without an `!important`. */
+.section-message:not(.home-dashboard) {
+    margin-top: 50%;
+}
+
+.footer {
+    /* Lives directly inside .main-container, after every section in
+       the flex column. `margin-top: auto` pushes it down to the
+       bottom of the card regardless of which section is active
+       (home dashboard, weather card, or not-found). `flex-shrink: 0`
+       keeps the small text intact even when the active section's
+       content is dense (long forecast list, tall conditions grid). */
+    margin-top: auto;
+    padding: 0.55em 0 0.35em;
+    text-align: center;
+    flex-shrink: 0;
+    line-height: 1.45;
+    opacity: 0.78;
+}
+
+.footer-main {
+    font-size: 0.72em;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    /* Each token (©, year, name) is its own span so the spacing
+       can be tuned independently without re-tokenising the markup. */
+}
+
+.footer-main .footer-symbol {
+    /* The © glyph reads better slightly heavier than the year/name
+       so the eye recognises it as the legal marker first. */
+    margin-right: 0.15em;
+}
+
+.footer-main .footer-year {
+    margin-right: 0.3em;
+}
+
+.footer-slogan {
+    font-size: 0.72em;
+    font-weight: 400;
+    opacity: 0.9;
+    font-style: italic;
+    margin-top: 0.08em;
+}
+
+@media (max-width: 280px) {
+    /* Down-scale on unusually narrow viewports so the slogan doesn't
+       wrap awkwardly against the card edge. */
+    .footer-main,
+    .footer-slogan {
+        font-size: 0.66em;
+    }
+}

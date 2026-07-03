@@ -215,6 +215,21 @@
                 </h4>
             </div>
         </section>
+
+        <!-- App footer. Lives directly inside .main-container (flex column)
+             so it's visible on every screen — home dashboard, weather card,
+             and not-found — without duplicating markup. `margin-top: auto`
+             in CSS pushes it to the bottom of the card regardless of which
+             section is active. Sits below every other flex item so it
+             never overlaps the search bar, condition grid, or forecast. -->
+        <footer class="footer" role="contentinfo">
+            <div class="footer-main">
+                <span class="footer-symbol">&copy;</span>
+                <span class="footer-year">2026</span>
+                <span class="footer-name">ForeCastor</span>
+            </div>
+            <div class="footer-slogan regular-txt">Predicting dam good weather</div>
+        </footer>
     </main>
 
 </body>
